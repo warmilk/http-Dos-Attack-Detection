@@ -1,7 +1,11 @@
 ### dos攻击原理
 正常的http请求是用两个 \r\n 结尾，这里构造了大量只有一个 \r\n 结尾的请求，http服务端会误认为请求还没结束，于是一直保存连接，直到服务端的连接数过多，最终无法处理别的正常请求
 
+漏洞详情：https://www.exploit-db.com/exploits/17696
 
+CVE: 2014-5329
+
+CVE: 2011-3192
 
 ### http request header 的 HOST: 是什么？
 
