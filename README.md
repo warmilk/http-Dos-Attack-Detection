@@ -16,7 +16,7 @@
 
 * #### 步骤二：服务端主机需自定义 Apache 日志文件存放路径
 
-    需要自己指定一下 Apache 日志文件的保存路径（修改方法自行百度），当然不改也行，用默认的apache日志存放路径即可，主要是不同的Linux发行版会有不同的存放路径，如ubuntu下apache的默认日志存放路径为 `/var/log/apache2/`。
+    需要自己指定一下 Apache 日志文件的保存路径（修改方法自行百度），当然不改也行，用默认的 apache 日志存放路径即可，主要是不同的Linux发行版会有不同的存放路径，如ubuntu下apache的默认日志存放路径为 `/var/log/apache2/`。
     
     因为这个日志文件是需要 “投喂” 给脚本用于训练模型的，所以请务必记住设置了存在哪个位置。
   
@@ -75,6 +75,13 @@
   
     `sklearn`：机器学习框架，用到了 DecisionTreeClassifier 决策树分类器，用于将正常流量和dos攻击的流量分离开
 
+## 漏洞原理
+
+正常的http请求是用两个 \r\n 结尾，`./tests/dos.py` 构造了大量只有一个 \r\n 结尾的请求，http服务端会误认为请求还没结束，于是一直保存连接，直到服务端的连接数过多，最终无法处理别的正常请求
+
+漏洞详情：[exploitDB](https://www.exploit-db.com/exploits/17696)   [CVE-2014-5329](https://nvd.nist.gov/vuln/detail/CVE-2014-5329)    [CVE-2011-3192](https://nvd.nist.gov/vuln/detail/CVE-2011-3192)
+
+
 
 ## 漏洞复现/利用
 
@@ -128,4 +135,4 @@
 ## TODO
 当前是直接在裸操作系统上复现，但为了便于后期维护迁移，我们应该将复现的漏洞环境打包放进docker里
 
-当前数据的预处理是直接读取.log文件处理为.csv，可能先抓到恶意流量的.pcap包，再转为转为.json，再预处理转为.csv会更合适？
+当前数据的预处理是直接读取.log文件处理为.csv，可能先抓到Apache流量的.pcap包，再转为转为.json，再预处理转为.csv会更合适？

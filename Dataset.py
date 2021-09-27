@@ -10,7 +10,7 @@ class Dataset:
 
     def __init__(self):
 
-        self.logs = Logs().read()
+        self.logs = Logs().read() # 读取apache的日志文件
         self.client_ip_label_encoder = preprocessing.LabelEncoder()
         self.request_method_label_encoder = preprocessing.LabelEncoder()
         self.request_status_label_encoder = preprocessing.LabelEncoder()
